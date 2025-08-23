@@ -4,17 +4,23 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <fstream>
+#include <chrono>
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 
 namespace money {
 
-    const std::string DEFAULT_CURRENCY = "EUR";
+    const bool LOGGING = true;
+
     const std::string API_URL = "https://v6.exchangerate-api.com/v6/";
     const std::string API_ENDPOINT = "/latest/";
 
-    std::map<std::string, double> getExchangeRates(const std::string& id, const std::string& baseCurrency = DEFAULT_CURRENCY);
-
+    //returns exchange rate destinationCurrency = exchangeRate * baseCurrency
+    //EUR = exchangeRate(EUR, RSD, id) * RSD
+    //returns 0 on error
+    double exchangeRate(const std::string& baseCurrency, const std::string& destinationCurrency, const std::string& id);
+    //double exchnageRate(const std::string& baseCurrency, const std::string& destinationCurrency); //open access version, rate limited, about once per hour
 }
 
-#endif //MONEY_H_
+#endif
