@@ -48,7 +48,7 @@ double money::exchangeRate(const std::string& baseCurrency, const std::string& d
             if(LOGGING) std::clog << "\tCached rates are valid.\n";
             cached = true;
         }
-        else if(LOGGING) std::clog << "Cached rates are outdated.\n";
+        else if(LOGGING) std::clog << "\tCached rates are outdated.\n";
         cachedRatesFile.close();
     }
 
@@ -60,6 +60,7 @@ double money::exchangeRate(const std::string& baseCurrency, const std::string& d
         allRates = nlohmann::json::parse(response); //catch exceptions
         if(allRates["result"] != "success") {
             if(LOGGING) std::clog << "API error.\n";
+            std::cout << response << '\n';
             return 0;
         }
         if(LOGGING) std::clog << "\tSuccess.\n";
